@@ -3,9 +3,7 @@ package com.idol.service.impl;
 
 import com.idol.exception.ResourceNotFoundException;
 import com.idol.model.User;
-import com.idol.model.mapper.ModelMapper;
 import com.idol.payload.UserDto;
-import com.idol.payload.mapper.DtoMapper;
 import com.idol.repository.UserRepository;
 import com.idol.service.UserService;
 import org.springframework.stereotype.Service;
@@ -19,7 +17,6 @@ public class UserServiceImpl implements UserService {
 
     private  UserRepository userRepository;
 
-
     public UserServiceImpl(UserRepository userRepository) {
 
         this.userRepository = userRepository;
@@ -27,8 +24,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        User newUser = userRepository.save(ModelMapper.mapUserFromUserDto(userDto));
-        return DtoMapper.mapToUserDto(newUser);
+
+     User user = mapToEntity(userDto);
+     User newUser = userRepository.save(user);
+     UserDto userResponse = mapToDto(newUser);
+     return userResponse;
     }
 
     @Override
@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    //Convert Entity into DTO
     private UserDto mapToDto(User user){
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
@@ -69,9 +70,13 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
-    private User mapToEntity(UserDto userDto){
+    //Converted DTO into Entity
+    private User mapToEntity (UserDto userDto){
         User user = new User();
+        user.setFirstName(userDto.getFirstName());
         user.setId(userDto.getId());
+        user.setLastName(userDto.getLastName());
+        user.setContactNumber(userDto.getContactNumber());
         return user;
     }
 }

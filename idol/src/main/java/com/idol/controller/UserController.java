@@ -1,6 +1,7 @@
 package com.idol.controller;
 
 
+
 import com.idol.payload.UserDto;
 import com.idol.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,8 @@ public class UserController {
 
     //Get all user rest api
     @GetMapping
-    public List<UserDto> getAllUsers() { return userService.getAllUsers(); }
+    public List<UserDto> getAllUsers() {
+        return userService.getAllUsers(); }
 
     // Create user rest api
     @PostMapping

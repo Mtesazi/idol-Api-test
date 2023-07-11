@@ -1,6 +1,8 @@
 package com.idol.service;
 
+
 import com.idol.payload.UserDto;
+
 import java.util.List;
 
 public interface UserService {
